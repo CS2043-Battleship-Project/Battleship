@@ -29,7 +29,35 @@ public class GameBoard {
   }
 
   public String attack(int playerNumber, String location) {
-    // TODO: implement attack
-    return "miss";
+    if (playerNumber == 1) {
+      for (int i = 0; i < playerOneShips.size(); i++) {
+        if (playerOneShips.get(i).partAt(location)) {
+          playerOneShips.get(i).removePart(location);
+          if (playerOneShips.get(i).isValid()) {
+            return "sunk";
+          } else {
+            return "hit";
+          }
+        } else {
+          return "miss";
+        }
+      }
+    } else if (playerNumber == 2) {
+      for (int i = 0; i < playerTwoShips.size(); i++) {
+        if (playerTwoShips.get(i).partAt(location)) {
+          playerTwoShips.get(i).removePart(location);
+          if (playerTwoShips.get(i).isValid()) {
+            return "sunk";
+          } else {
+            return "hit";
+          }
+        } else {
+          return "miss";
+        }
+      }
+    } else {
+      return "err";
+    }
+    return "err";
   }
 }
