@@ -32,7 +32,7 @@ public class Server {
       playerOneOut = new PrintWriter
                      (playerOneSocket.getOutputStream());
     } catch (IOException e) {
-      System.err.println("Cannont read or write player one: " + e.getMessage());
+      System.err.println("Cannot read or write player one: " + e.getMessage());
     }
 
     try {
@@ -41,7 +41,7 @@ public class Server {
       playerTwoOut = new PrintWriter
                      (playerTwoSocket.getOutputStream());
     } catch (IOException e) {
-      System.err.println("Cannont read or write player two: " + e.getMessage());
+      System.err.println("Cannot read or write player two: " + e.getMessage());
     }
 
 
@@ -56,8 +56,14 @@ public class Server {
     System.out.println("Player two connected");
   }
 
-  public Boolean sendMessage(String player, String message) {
-    // TODO: server send stuff
-    return true;
+  public Boolean sendMessage(int playerNumber, String message) {
+    if (playerNumber == 1) {
+      playerOneOut.println(message);
+    } else if (playerNumber == 2) {
+      playerTwoOut.println(message);
+    } else {
+      return false;
+    }
+    return false;
   }
 }
