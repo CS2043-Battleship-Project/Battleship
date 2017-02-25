@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BGSetupParser {
-  Ship parseMessage(String message) {
+  public static Ship parseMessage(String message) {
     ArrayList<String> parts = new ArrayList<String>();
     String[] tokens = message.split(" ");
 

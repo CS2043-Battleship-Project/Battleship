@@ -26,6 +26,7 @@ public class Server {
       System.err.println("Accepting player one failed: " + e.getMessage());
     }
 
+
     try {
       playerOneIn = new BufferedReader
                     (new InputStreamReader(playerOneSocket.getInputStream()));
@@ -35,6 +36,14 @@ public class Server {
       System.err.println("Cannot read or write player one: " + e.getMessage());
     }
 
+    System.out.println("Player one connected");
+
+    try {
+      playerTwoSocket = socket.accept();
+    } catch (IOException e) {
+      System.err.println("Accepting player two failed: " + e.getMessage());
+    }
+
     try {
       playerTwoIn = new BufferedReader
                     (new InputStreamReader(playerTwoSocket.getInputStream()));
@@ -42,15 +51,6 @@ public class Server {
                      (playerTwoSocket.getOutputStream());
     } catch (IOException e) {
       System.err.println("Cannot read or write player two: " + e.getMessage());
-    }
-
-
-    System.out.println("Player one connected");
-
-    try {
-      playerTwoSocket = socket.accept();
-    } catch (IOException e) {
-      System.err.println("Accepting player two failed: " + e.getMessage());
     }
 
     System.out.println("Player two connected");
