@@ -7,7 +7,6 @@ public class GameManager {
     // Port defaults to 314159 if a port isn't passed in on the command line
     server = new Server(args.length != 0 ? args[0] : "31415");
     // TODO: main method
-    while(true) {}
   }
 
   public Boolean receiveMessage(int playerNumber, String message) {

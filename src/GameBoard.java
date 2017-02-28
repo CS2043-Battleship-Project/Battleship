@@ -34,7 +34,11 @@ public class GameBoard {
         if (playerOneShips.get(i).partAt(location)) {
           playerOneShips.get(i).removePart(location);
           if (playerOneShips.get(i).isValid()) {
-            return "sunk";
+            if (playerOneShips.size() == 0) {
+              return "sunk " + playerOneShips.get(i).getType() + ",win";
+            } else {
+              return "sunk " + playerOneShips.get(i).getType();
+            }
           } else {
             return "hit";
           }
@@ -47,7 +51,11 @@ public class GameBoard {
         if (playerTwoShips.get(i).partAt(location)) {
           playerTwoShips.get(i).removePart(location);
           if (playerTwoShips.get(i).isValid()) {
-            return "sunk";
+            if (playerOneShips.size() == 0) {
+              return "sunk " + playerTwoShips.get(i).getType() + ",win";
+            } else {
+              return "sunk " + playerTwoShips.get(i).getType();
+            }
           } else {
             return "hit";
           }

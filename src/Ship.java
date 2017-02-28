@@ -46,10 +46,15 @@ public class Ship {
         return false;
       }
 
-      char col = parts.get(i).charAt(1);
+      String col = "";
+      col += parts.get(i).charAt(1);
 
-      if (col != '1' && col != '2' && col != '3' && col != '4' && col != '5' &&
-          col != '6' && col != '7' && col != '8' && col != '9') {
+      if (parts.get(i).length() > 2) {
+        col += parts.get(i).charAt(2);
+      }
+
+      if (col != "1" && col != "2" && col != "3" && col != "4" && col != "5" &&
+          col != "6" && col != "7" && col != "8" && col != "9" && col != "10") {
         return false;
       }
     }
@@ -65,5 +70,9 @@ public class Ship {
 
   public Boolean partAt(String location) {
     return parts.contains(location);
+  }
+
+  public String getType() {
+    return type;
   }
 }
