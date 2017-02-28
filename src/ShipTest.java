@@ -31,5 +31,24 @@ public class ShipTest {
     parts.add("A2");
     ship = new Ship("FR", parts);
     System.out.println(ship.isValid());
+
+    parts.clear();
+    parts.add("A1");
+    parts.add("A2");
+    ship = new Ship("FR", parts);
+    System.out.println(ship.partAt("A3"));
+
+    parts.clear();
+    parts.add("A1");
+    parts.add("A2");
+    ship = new Ship("FR", parts);
+    System.out.println(ship.partAt("A2"));
+
+    parts.clear();
+    parts.add("A1");
+    parts.add("A2");
+    ship = new Ship("FR", parts);
+    ship.removePart("A2");
+    System.out.println(ship.partAt("A2"));
   }
 }

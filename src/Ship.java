@@ -18,29 +18,28 @@ public class Ship {
       return false;
     }
 
-    if (type != "AC" && type != "CR" && type != "SB" && type != "FR") {
+    if (!type.equals("AC") && !type.equals("CR") && !type.equals("SB") && !type.equals("FR")) {
       return false;
     }
 
-    if (type == "AC" && parts.size() != 5) {
+    if (type.equals("AC") && parts.size() != 5) {
       return false;
     }
 
-    if (type == "CR" && parts.size() != 4) {
+    if (type.equals("CR") && parts.size() != 4) {
       return false;
     }
 
-    if (type == "SB" && parts.size() != 3) {
+    if (type.equals("SB") && parts.size() != 3) {
       return false;
     }
 
-    if (type == "FR" && parts.size() != 2) {
+    if (type.equals("FR") && parts.size() != 2) {
       return false;
     }
 
     for (int i = 0; i < parts.size(); i++) {
       char row = parts.get(i).charAt(0);
-
       if (row != 'A' && row != 'B' && row != 'C' && row != 'D' && row != 'E' &&
           row != 'F' && row != 'G' && row != 'H' && row != 'I' && row != 'J') {
         return false;
@@ -48,13 +47,14 @@ public class Ship {
 
       String col = "";
       col += parts.get(i).charAt(1);
-
       if (parts.get(i).length() > 2) {
         col += parts.get(i).charAt(2);
       }
 
-      if (col != "1" && col != "2" && col != "3" && col != "4" && col != "5" &&
-          col != "6" && col != "7" && col != "8" && col != "9" && col != "10") {
+      if (!col.equals("1") && !col.equals("2") && !col.equals("3") &&
+          !col.equals("4") && !col.equals("5") && !col.equals("6") &&
+          !col.equals("7") && !col.equals("8") && !col.equals("9") &&
+          !col.equals("10")) {
         return false;
       }
     }
