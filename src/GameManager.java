@@ -5,16 +5,25 @@ public class GameManager {
 
   public static void main(String[] args) {
     // Port defaults to 314159 if a port isn't passed in on the command line
-    server = new Server(args.length != 0 ? args[0] : "31415");
-    // TODO: main method
+    
+   // TODO: main method
+  
+		server = new Server(args.length != 0 ? args[0] : "31415");
+		
   }
+	
+	public GameManager()
+	{
+	  isInSetup = true;
+	   board = new GameBoard();
+	}
 
   public Boolean receiveMessage(int playerNumber, String message) {
-    if (isInSetup) {
+    if (isInSetup == true) {
       String[] unparsedShips = message.split(",");
 
       boolean success = false;
-
+	
       for (int i = 0; i < unparsedShips.length; i++) {
         success = false;
         if (!board.addShip(playerNumber, BGSetupParser.parseMessage(unparsedShips[i]))) {
@@ -34,6 +43,7 @@ public class GameManager {
       server.sendMessage(playerNumber, result);
       server.sendMessage(playerNumber == 1 ? 2 : 1, message + ',' + result);
     }
+    System.out.println("It works");
     return true;
   }
 }

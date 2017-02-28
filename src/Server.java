@@ -32,6 +32,7 @@ public class Server {
                     (new InputStreamReader(playerOneSocket.getInputStream()));
       playerOneOut = new PrintWriter
                      (playerOneSocket.getOutputStream());
+	
     } catch (IOException e) {
       System.err.println("Cannot read or write player one: " + e.getMessage());
     }
@@ -40,6 +41,7 @@ public class Server {
 
     try {
       playerTwoSocket = socket.accept();
+	
     } catch (IOException e) {
       System.err.println("Accepting player two failed: " + e.getMessage());
     }
@@ -49,13 +51,60 @@ public class Server {
                     (new InputStreamReader(playerTwoSocket.getInputStream()));
       playerTwoOut = new PrintWriter
                      (playerTwoSocket.getOutputStream());
+		String player2Input;
+	
+	
     } catch (IOException e) {
       System.err.println("Cannot read or write player two: " + e.getMessage());
+	
     }
+	
 
     System.out.println("Player two connected");
-  }
-
+	try{
+	
+		boolean done = false;
+		GameManager gm = new GameManager();
+		while(!done)
+		{
+		    String player1Input = playerOneIn.readLine();
+		     String player2Input = playerTwoIn.readLine();
+     		
+		     gm.receiveMessage(1,player1Input);
+			gm.receiveMessage(2,player2Input);
+			
+			 if (player1Input.trim().equals("BYE") ||player2Input.trim().equals("BYE") ) {
+                  done = true;
+               }
+		 }
+		
+	  }
+	catch (IOException e) {
+         System.err.println("Unable to read from or write to the client: "
+                            + e.getMessage());
+      }
+	 try {
+         playerOneOut.close();
+         playerOneIn.close();
+         playerOneSocket.close();
+         socket.close();
+      }
+      catch (IOException e) {
+         System.err.println("Unable to close player one's writer, reader, or socket: "
+                            + e.getMessage());
+      }
+	try {
+         playerTwoOut.close();
+         playerTwoIn.close();
+         playerTwoSocket.close();
+         
+      }
+      catch (IOException e) {
+         System.err.println("Unable to close player two's writer, reader, or socket: "
+                            + e.getMessage());
+      }
+	}
+	
   public Boolean sendMessage(int playerNumber, String message) {
     if (playerNumber == 1) {
       playerOneOut.println(message);
