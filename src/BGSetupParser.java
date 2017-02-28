@@ -41,12 +41,6 @@ public class BGSetupParser {
       return null;
     }
 
-    System.out.println(tokens[0]);
-
-    for (int i = 0; i < parts.size(); i++) {
-      System.out.println(parts.get(i));
-    }
-
     Ship temp = new Ship(tokens[0], parts);
     if (temp.isValid()) {
       return temp;

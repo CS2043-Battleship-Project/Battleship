@@ -59,6 +59,7 @@ public class Ship {
       }
     }
 
+
     for (int i = 0; i < parts.size(); i++) {
       if (parts.get(0).charAt(0) != parts.get(i).charAt(0) && parts.get(0).charAt(1) != parts.get(i).charAt(1)) {
         return false;
