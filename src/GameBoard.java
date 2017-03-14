@@ -10,12 +10,16 @@ public class GameBoard {
   }
 
   public Boolean addShip(int playerNumber, Ship ship) {
-    if (playerNumber == 1) {
-      return playerOneShips.add(ship);
-    } else if (playerNumber == 2) {
-      return playerTwoShips.add(ship);
-    } else {
+    if (ship == null) {
       return false;
+    } else {
+      if (playerNumber == 1) {
+        return playerOneShips.add(ship);
+      } else if (playerNumber == 2) {
+        return playerTwoShips.add(ship);
+      } else {
+        return false;
+      }
     }
   }
 

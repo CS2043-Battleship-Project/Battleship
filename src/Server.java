@@ -31,8 +31,8 @@ public class Server {
       playerOneIn = new BufferedReader
                     (new InputStreamReader(playerOneSocket.getInputStream()));
       playerOneOut = new PrintWriter
-                     (playerOneSocket.getOutputStream());
-	
+                     (playerOneSocket.getOutputStream(), true);
+
     } catch (IOException e) {
       System.err.println("Cannot read or write player one: " + e.getMessage());
     }
@@ -41,7 +41,7 @@ public class Server {
 
     try {
       playerTwoSocket = socket.accept();
-	
+
     } catch (IOException e) {
       System.err.println("Accepting player two failed: " + e.getMessage());
     }
@@ -50,69 +50,67 @@ public class Server {
       playerTwoIn = new BufferedReader
                     (new InputStreamReader(playerTwoSocket.getInputStream()));
       playerTwoOut = new PrintWriter
-                     (playerTwoSocket.getOutputStream());
+                     (playerTwoSocket.getOutputStream(), true);
 		String player2Input;
-	
-	
+
+
     } catch (IOException e) {
       System.err.println("Cannot read or write player two: " + e.getMessage());
-	
+
     }
-	
+
 
     System.out.println("Player two connected");
-	try{
-	
-		boolean done = false;
-		GameManager gm = new GameManager();
-		while(!done)
-		{
-		    String player1Input = playerOneIn.readLine();
-		     String player2Input = playerTwoIn.readLine();
-     		
-		     gm.receiveMessage(1,player1Input);
-			gm.receiveMessage(2,player2Input);
-			
-			 if (player1Input.trim().equals("BYE") ||player2Input.trim().equals("BYE") ) {
-                  done = true;
-               }
-		 }
-		
-	  }
-	catch (IOException e) {
-         System.err.println("Unable to read from or write to the client: "
-                            + e.getMessage());
+
+    Boolean done = false;
+    while (!done) {
+      try {
+        String playerOneLine = playerOneIn.readLine();
+        if (playerOneLine == null) {
+          done = true;
+        } else {
+          String response = GameManager.receiveMessage(1, playerOneLine);
+          if (response.charAt(0) == '1') {
+            playerOneOut.println(response.replaceFirst("(1|2):", ""));
+          } else {
+            playerTwoOut.println(response.replaceFirst("(1|2):", ""));
+          }
+
+        }
+
+        String playerTwoLine = playerTwoIn.readLine();
+        if (playerTwoLine == null) {
+          done = true;
+        } else {
+          String response = GameManager.receiveMessage(2, playerTwoLine);
+          if (response.charAt(0) == '1') {
+            playerOneOut.println(response.replaceFirst("(1|2):", ""));
+          } else {
+            playerTwoOut.println(response.replaceFirst("(1|2):", ""));
+          }
+        }
+      } catch (IOException e) {
+        System.err.println("Error reading player input: " + e.getMessage());
       }
-	 try {
-         playerOneOut.close();
-         playerOneIn.close();
-         playerOneSocket.close();
-         socket.close();
-      }
+}
+
+	  try {
+       playerOneOut.close();
+       playerOneIn.close();
+       playerOneSocket.close();
+    }
       catch (IOException e) {
-         System.err.println("Unable to close player one's writer, reader, or socket: "
+         System.err.println("Unable to close player one's resources: "
                             + e.getMessage());
       }
-	try {
+      try {
          playerTwoOut.close();
          playerTwoIn.close();
          playerTwoSocket.close();
-         
       }
-      catch (IOException e) {
-         System.err.println("Unable to close player two's writer, reader, or socket: "
-                            + e.getMessage());
-      }
-	}
-	
-  public Boolean sendMessage(int playerNumber, String message) {
-    if (playerNumber == 1) {
-      playerOneOut.println(message);
-    } else if (playerNumber == 2) {
-      playerTwoOut.println(message);
-    } else {
-      return false;
-    }
-    return false;
-  }
+        catch (IOException e) {
+           System.err.println("Unable to close player two's resources: "
+                              + e.getMessage());
+        }
 }
+	}

@@ -13,36 +13,29 @@ public class GameManager {
 
   }
 
-  public Boolean receiveMessage(int playerNumber, String message) {
+  public static String receiveMessage(int playerNumber, String message) {
     if (isInSetup == true) {
       String[] unparsedShips = message.split(",");
 
-      boolean success = false;
+      boolean success = true;
 
       for (int i = 0; i < unparsedShips.length; i++) {
-        success = false;
-        if (!board.addShip(playerNumber, BGSetupParser.parseMessage(unparsedShips[i]))) {
+        if (!board.addShip(playerNumber,
+                           BGSetupParser.parseMessage(unparsedShips[i]))) {
+                             success = false;
           break;
         }
-        success = true;
-      }
 
+      }
       if (success) {
-        if (server != null) {
-          server.sendMessage(playerNumber, "ack," + playerNumber);
-        }
+          return playerNumber + ":" + "ack," + playerNumber;
       } else {
-        if (server != null) {
-          server.sendMessage(playerNumber, "err");
-        }
+          return playerNumber + ":" + "err";
       }
 
     } else {
       String result = board.attack(playerNumber, message);
-      server.sendMessage(playerNumber, result);
-      server.sendMessage(playerNumber == 1 ? 2 : 1, message + ',' + result);
+      return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result;
     }
-    System.out.println("It works");
-    return true;
   }
 }

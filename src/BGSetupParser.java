@@ -5,7 +5,7 @@ public class BGSetupParser {
     ArrayList<String> parts = new ArrayList<String>();
     String[] tokens = message.split(" ");
 
-    if (tokens[0] == "AC") {
+    if (tokens[0].equals("AC")) {
       if (tokens.length != 6) {
         return null;
       } else {
@@ -13,7 +13,7 @@ public class BGSetupParser {
           parts.add(tokens[i]);
         }
       }
-    } else if (tokens[0] == "CR") {
+    } else if (tokens[0].equals("CR")) {
       if (tokens.length != 5) {
         return null;
       } else {
@@ -21,7 +21,7 @@ public class BGSetupParser {
           parts.add(tokens[i]);
         }
       }
-    } else if (tokens[0] == "SB") {
+    } else if (tokens[0].equals("SB")) {
       if (tokens.length != 4) {
         return null;
       } else {
@@ -29,7 +29,7 @@ public class BGSetupParser {
           parts.add(tokens[i]);
         }
       }
-    } else if (tokens[0] == "FR") {
+    } else if (tokens[0].equals("FR")) {
       if (tokens.length != 3) {
         return null;
       } else {

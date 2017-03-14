@@ -18,23 +18,24 @@ public class Ship {
       return false;
     }
 
-    if (type != "AC" && type != "CR" && type != "SB" && type != "FR") {
+    if (!type.equals("AC") && !type.equals("CR") && !type.equals("SB") &&
+        !type.equals("FR")) {
       return false;
     }
 
-    if (type == "AC" && parts.size() != 5) {
+    if (type.equals("AC") && parts.size() != 5) {
       return false;
     }
 
-    if (type == "CR" && parts.size() != 4) {
+    if (type.equals("CR") && parts.size() != 4) {
       return false;
     }
 
-    if (type == "SB" && parts.size() != 3) {
+    if (type.equals("SB") && parts.size() != 3) {
       return false;
     }
 
-    if (type == "FR" && parts.size() != 2) {
+    if (type.equals("FR") && parts.size() != 2) {
       return false;
     }
 
@@ -51,6 +52,12 @@ public class Ship {
       if (col != '1' && col != '2' && col != '3' && col != '4' && col != '5' &&
           col != '6' && col != '7' && col != '8' && col != '9') {
         return false;
+      }
+
+      if (parts.get(i).length() > 2) {
+        if (parts.get(i).charAt(2) == '1') {
+          return false;
+        }
       }
     }
 
