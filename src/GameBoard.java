@@ -10,6 +10,7 @@ public class GameBoard {
   }
 
   public Boolean addShip(int playerNumber, Ship ship) {
+    System.out.println(ship);
     if (ship == null) {
       return false;
     } else {
@@ -34,8 +35,10 @@ public class GameBoard {
   }
 
   public String attack(int playerNumber, String location) {
+    Boolean miss = false;
     if (playerNumber == 1) {
       for (int i = 0; i < playerOneShips.size(); i++) {
+        System.out.println(playerOneShips.get(i));
         if (playerOneShips.get(i).partAt(location)) {
           playerOneShips.get(i).removePart(location);
           if (playerOneShips.get(i).isValid()) {
@@ -43,12 +46,12 @@ public class GameBoard {
           } else {
             return "hit";
           }
-        } else {
-          return "miss";
+          miss = true;
         }
       }
     } else if (playerNumber == 2) {
       for (int i = 0; i < playerTwoShips.size(); i++) {
+        System.out.println(playerTwoShips.get(i));
         if (playerTwoShips.get(i).partAt(location)) {
           playerTwoShips.get(i).removePart(location);
           if (playerTwoShips.get(i).isValid()) {
@@ -56,13 +59,16 @@ public class GameBoard {
           } else {
             return "hit";
           }
-        } else {
-          return "miss";
+          miss = true;
         }
       }
     } else {
       return "err";
     }
-    return "err";
+    if (miss) {
+      return miss;
+    } else {
+      return "err";
+    }
   }
 }
