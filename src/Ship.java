@@ -74,6 +74,10 @@ public class Ship {
     return parts.contains(location);
   }
 
+  public int getSize() {
+    return parts.size();
+  }
+
   public String toString() {
     String temp = type + " ";
     for (int i = 0; i < parts.size(); i++) {

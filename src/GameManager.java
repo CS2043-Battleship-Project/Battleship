@@ -36,8 +36,16 @@ public class GameManager {
       }
 
     } else {
-      String result = board.attack((playerNumber == 1 ? 2 : 1), message);
-      return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result;
+      String temp = board.attack((playerNumber == 1 ? 2 : 1), message);
+      if (temp == "err") {
+        return playerNumber + ":" + temp;
+      }
+      String[] result = temp.split(",");
+      if (result[1] == "win") {
+        return (playerNumber == 1 ? 2 : 1) + ":" + message + ','
+                                           + result[0] + ",loss";
+      }
+      return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result[0];
     }
   }
 
