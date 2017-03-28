@@ -20,6 +20,7 @@ public class GameManager {
       boolean success = true;
 
       for (int i = 0; i < unparsedShips.length; i++) {
+        System.out.println("unparsedShips[" + i + "] : " + unparsedShips[i]);
         if (!board.addShip(playerNumber,
                            BGSetupParser.parseMessage(unparsedShips[i]))) {
                              success = false;
@@ -27,6 +28,7 @@ public class GameManager {
         }
 
       }
+
       if (success) {
           return playerNumber + ":" + "ack," + playerNumber;
       } else {
@@ -34,8 +36,20 @@ public class GameManager {
       }
 
     } else {
-      String result = board.attack(playerNumber, message);
-      return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result;
+      String temp = board.attack((playerNumber == 1 ? 2 : 1), message);
+      if (temp == "err") {
+        return playerNumber + ":" + temp;
+      }
+      String[] result = temp.split(",");
+      if (result[1] == "win") {
+        return (playerNumber == 1 ? 2 : 1) + ":" + message + ','
+                                           + result[0] + ",loss";
+      }
+      return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result[0];
     }
+  }
+
+  public static void setIsInSetup(Boolean _isInSetup) {
+    isInSetup = _isInSetup;
   }
 }

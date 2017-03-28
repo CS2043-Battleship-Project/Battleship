@@ -62,37 +62,103 @@ public class Server {
 
     System.out.println("Player two connected");
 
-    Boolean done = false;
-    while (!done) {
-      try {
-        String playerOneLine = playerOneIn.readLine();
-        if (playerOneLine == null) {
-          done = true;
-        } else {
-          String response = GameManager.receiveMessage(1, playerOneLine);
-          if (response.charAt(0) == '1') {
-            playerOneOut.println(response.replaceFirst("(1|2):", ""));
-          } else {
-            playerTwoOut.println(response.replaceFirst("(1|2):", ""));
-          }
+    Boolean doneSetup = false;
+    Boolean playerOneSuccessful = false;
+    Boolean playerTwoSuccessful = false;
 
+    while (!doneSetup) {
+      try {
+        if (!playerOneSuccessful) {
+          String playerOneLine = playerOneIn.readLine();
+          System.out.println(playerOneLine);
+          if (playerOneLine == null) {
+            doneSetup = true;
+          } else {
+            String message = GameManager.receiveMessage(1, playerOneLine);
+            String response = message.replaceFirst("(1|2):", "");
+            if (message.charAt(0) == '1') {
+              if (response.startsWith("ack")) {
+                playerOneSuccessful = true;
+              }
+              playerOneOut.println(response);
+            } else {
+              playerTwoOut.println(response);
+            }
+
+          }
         }
 
-        String playerTwoLine = playerTwoIn.readLine();
-        if (playerTwoLine == null) {
-          done = true;
-        } else {
-          String response = GameManager.receiveMessage(2, playerTwoLine);
-          if (response.charAt(0) == '1') {
-            playerOneOut.println(response.replaceFirst("(1|2):", ""));
+        if (!playerTwoSuccessful) {
+          String playerTwoLine = playerTwoIn.readLine();
+          System.out.println(playerTwoLine);
+          if (playerTwoLine == null) {
+            doneSetup = true;
           } else {
-            playerTwoOut.println(response.replaceFirst("(1|2):", ""));
+            String message = GameManager.receiveMessage(2, playerTwoLine);
+            String response = message.replaceFirst("(1|2):", "");
+            System.out.println(response);
+            if (message.charAt(0) == '1') {
+              playerOneOut.println(response.replaceFirst("(1|2):", ""));
+            } else {
+              if (response.startsWith("ack")) {
+                playerTwoSuccessful = true;
+              }
+              playerTwoOut.println(response.replaceFirst("(1|2):", ""));
+            }
           }
         }
       } catch (IOException e) {
         System.err.println("Error reading player input: " + e.getMessage());
       }
-}
+
+      if (playerOneSuccessful && playerTwoSuccessful) {
+        GameManager.setIsInSetup(false);
+        playerOneOut.println("ok");
+        doneSetup = true;
+      }
+    }
+
+    Boolean doneGame = false;
+    while (!doneGame) {
+      try {
+          String playerOneLine = playerOneIn.readLine();
+          System.out.println("Player one input: " + playerOneLine);
+          if (playerOneLine == null) {
+            doneGame = true;
+          } else {
+            String message = GameManager.receiveMessage(1, playerOneLine);
+
+            System.out.println("Player one messsage: " + message);
+            String[] response = message.replaceFirst("(1|2):", "").split(",");
+            if (response[1] == "err") {
+              playerOneOut.println(response[1]);
+              continue;
+            }
+              playerOneOut.println(response[1]);
+              playerTwoOut.println(response[0] + ',' + response[1]);
+
+          }
+
+
+          String playerTwoLine = playerTwoIn.readLine();
+          System.out.println(playerTwoLine);
+          if (playerTwoLine == null) {
+            doneGame = true;
+          } else {
+            String message = GameManager.receiveMessage(2, playerTwoLine);
+            String[] response = message.replaceFirst("(1|2):", "").split(",");
+            if (response[1] == "err") {
+              playerTwoOut.println(response[1]);
+              continue;
+            }
+              playerOneOut.println(response[0] + ',' + response[1]);
+              playerTwoOut.println(response[1]);
+          }
+
+      } catch (IOException e) {
+        System.err.println("Error reading player input: " + e.getMessage());
+      }
+    }
 
 	  try {
        playerOneOut.close();
