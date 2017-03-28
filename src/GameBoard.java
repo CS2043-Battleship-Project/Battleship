@@ -60,7 +60,9 @@ public class GameBoard {
             if (playerOneShips.size() == 0) {
               return "sunk " + playerOneShips.get(i).toString() + ",win";
             }
-            return "sunk " + playerOneShips.get(i).toString();
+            return "sunk " + playerOneShips.get(i).toString().charAt(0) +
+                             playerOneShips.get(i).toString().charAt(1) +
+                             playerOneShips.get(i).toString().charAt(2);
           } else {
             return "hit";
           }

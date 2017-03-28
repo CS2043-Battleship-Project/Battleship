@@ -4,7 +4,7 @@ public class GameManager {
   private static Server server;
 
   public static void main(String[] args) {
-    // Port defaults to 314159 if a port isn't passed in on the command line
+    // Port defaults to 31415 if a port isn't passed in on the command line
 
    // TODO: main method
     isInSetup = true;
@@ -37,11 +37,12 @@ public class GameManager {
 
     } else {
       String temp = board.attack((playerNumber == 1 ? 2 : 1), message);
+      System.out.println("GameManager: " + message);
       if (temp == "err") {
         return playerNumber + ":" + temp;
       }
       String[] result = temp.split(",");
-      if (result[1] == "win") {
+      if (result.length > 1 && result[1] == "win") {
         return (playerNumber == 1 ? 2 : 1) + ":" + message + ','
                                            + result[0] + ",loss";
       }
