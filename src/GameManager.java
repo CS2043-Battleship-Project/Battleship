@@ -37,15 +37,18 @@ public class GameManager {
 
     } else {
       String temp = board.attack((playerNumber == 1 ? 2 : 1), message);
-      System.out.println("GameManager: " + message);
+      System.out.println("GameManager: " + temp);
       if (temp == "err") {
         return playerNumber + ":" + temp;
       }
       String[] result = temp.split(",");
-      if (result.length > 1 && result[1] == "win") {
+      if (result.length > 1 && result[1].equals("win")) {
+        System.out.println((playerNumber == 1 ? 2 : 1) + ":" + message + ','
+                                                       + result[0] + ",loss");
         return (playerNumber == 1 ? 2 : 1) + ":" + message + ','
                                            + result[0] + ",loss";
       }
+      System.out.println("GM: " + (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result[0]);
       return (playerNumber == 1 ? 2 : 1) + ":" + message + ',' + result[0];
     }
   }

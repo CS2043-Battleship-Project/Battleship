@@ -130,7 +130,7 @@ public class Server {
 
             System.out.println("Player one messsage: " + message);
             String[] response = message.replaceFirst("(1|2):", "").split(",");
-            if (response[1] == "err") {
+            if (response.length > 1 && response[1].equals("err")) {
               playerOneOut.println(response[1]);
               continue;
             }
@@ -147,7 +147,7 @@ public class Server {
           } else {
             String message = GameManager.receiveMessage(2, playerTwoLine);
             String[] response = message.replaceFirst("(1|2):", "").split(",");
-            if (response[1] == "err") {
+            if (response.length > 1 && response[1].equals("err")) {
               playerTwoOut.println(response[1]);
               continue;
             }

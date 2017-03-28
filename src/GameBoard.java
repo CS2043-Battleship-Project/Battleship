@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameBoard {
   private ArrayList<Ship> playerOneShips;
@@ -51,47 +52,58 @@ public class GameBoard {
       return "err";
     }
     Boolean miss = false;
+
+    for (int i = 0; i < playerOneShips.size(); i++) {
+      System.out.println("Player one ships: " + playerOneShips.get(i));
+    }
+
+    for (int i = 0; i < playerTwoShips.size(); i++) {
+      System.out.println("Player two ships: " + playerTwoShips.get(i));
+    }
+
     if (playerNumber == 1) {
-      for (int i = 0; i < playerOneShips.size(); i++) {
-        System.out.println(playerOneShips.get(i));
-        if (playerOneShips.get(i).partAt(location)) {
-          playerOneShips.get(i).removePart(location);
-          if (playerOneShips.get(i).getSize() == 0) {
-            if (playerOneShips.size() == 0) {
-              return "sunk " + playerOneShips.get(i).toString() + ",win";
+      for (Iterator<Ship> iterator = playerOneShips.iterator(); iterator.hasNext(); ) {
+        Ship playerOneShip = iterator.next();
+        if (playerOneShip.partAt(location)) {
+          playerOneShip.removePart(location);
+          if (playerOneShip.getSize() == 0) {
+            String temp = "" + playerOneShip.toString().charAt(0) +
+                               playerOneShip.toString().charAt(1) +
+                               playerOneShip.toString().charAt(2);
+            iterator.remove();
+            if (playerOneShips.isEmpty()) {
+              temp = playerOneShip.toString().trim();
+              return "sunk " + temp + ",win";
             }
-            return "sunk " + playerOneShips.get(i).toString().charAt(0) +
-                             playerOneShips.get(i).toString().charAt(1) +
-                             playerOneShips.get(i).toString().charAt(2);
+            return "sunk " + temp;
           } else {
             return "hit";
           }
         }
-        miss = true;
+        return "miss";
       }
     } else if (playerNumber == 2) {
-      for (int i = 0; i < playerTwoShips.size(); i++) {
-        System.out.println(playerTwoShips.get(i));
-        if (playerTwoShips.get(i).partAt(location)) {
-          playerTwoShips.get(i).removePart(location);
-          if (playerTwoShips.get(i).getSize() == 0) {
-            if (playerTwoShips.size() == 0) {
-              return "sunk " + playerOneShips.get(i).toString() + ",win";
+      for (Iterator<Ship> iterator = playerTwoShips.iterator(); iterator.hasNext(); ) {
+        Ship playerTwoShip = iterator.next();
+        if (playerTwoShip.partAt(location)) {
+          playerTwoShip.removePart(location);
+          if (playerTwoShip.getSize() == 0) {
+            String temp = "" + playerTwoShip.toString().charAt(0) +
+                               playerTwoShip.toString().charAt(1) +
+                               playerTwoShip.toString().charAt(2);
+            iterator.remove();
+            if (playerTwoShips.isEmpty()) {
+              temp = playerTwoShip.toString().trim();
+              return "sunk " + temp + ",win";
             }
-            return "sunk " + playerOneShips.get(i).toString();
+            return "sunk " + temp;
           } else {
             return "hit";
           }
         }
-        miss = true;
+        return "miss";
       }
-    } else {
-      return "err";
     }
-    if (miss) {
-      return "miss";
-    } else {
-      return "err";
-    }
+    return "err";
   }
 }
