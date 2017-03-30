@@ -134,9 +134,13 @@ public class Server {
               playerOneOut.println(response[1]);
               continue;
             }
+            if (response.length > 2) {
+              playerOneOut.println(response[1] + ",win");
+              playerTwoOut.println(response[0] + ',' + response[1] + ',' + response[2]);
+            } else {
               playerOneOut.println(response[1]);
               playerTwoOut.println(response[0] + ',' + response[1]);
-
+            }
           }
 
 
@@ -151,8 +155,13 @@ public class Server {
               playerTwoOut.println(response[1]);
               continue;
             }
-              playerOneOut.println(response[0] + ',' + response[1]);
+            if (response.length > 2) {
+              playerTwoOut.println(response[1] + ",win");
+              playerOneOut.println(response[0] + ',' + response[1] + ',' + response[2]);
+            } else {
               playerTwoOut.println(response[1]);
+              playerOneOut.println(response[0] + ',' + response[1]);
+            }
           }
 
       } catch (IOException e) {
