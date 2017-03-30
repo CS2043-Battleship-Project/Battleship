@@ -3,22 +3,23 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Toolkit;
 
-public class SetupGUI extends JFrame
+public class GamePlayGUI extends JFrame
 {
   private JFrame frame;
   private Toolkit toolkit;
-  private JButton[][] location;
+  private JButton[][] attackLocation;
+  private JButton[][] shipLocation;
   private JButton exitButton;
   private JLabel instructions;
   private ActionListener listener;
 
-  public SetupGUI()
+  public GamePlayGUI()
   {
     frame  = new JFrame();
     frame.setSize(800,800);
     frame.setTitle("BattleShip");
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    frame.setLayout(new GridLayout(2, 1));
+    frame.setLayout(new GridLayout(3, 1));
     frame.setVisible(true);
     toolkit = Toolkit.getDefaultToolkit();
 
@@ -32,11 +33,13 @@ public class SetupGUI extends JFrame
       }
     };
 
-    location = new JButton[10][10];
+    shipLocation = new JButton[10][10];
+    attackLocation = new JButton[10][10];
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
-        location[i][j] = new JButton((char)(i + 65) + "" + (j + 1));
-        location[i][j].addActionListener(listener);
+        attackLocation[i][j] = new JButton((char)(i + 65) + "" + (j + 1));
+        shipLocation[i][j] = new JButton((char)(i + 65) + "" + (j + 1));
+        attackLocation[i][j].addActionListener(listener);
       }
     }
   }
@@ -48,25 +51,36 @@ public class SetupGUI extends JFrame
 
     exitButton = new JButton("Exit");
 
-    JPanel buttonPanel = new JPanel(new GridLayout(10, 10));
+    JPanel attackButtonPanel = new JPanel(new GridLayout(10, 10));
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
-        buttonPanel.add(location[i][j]);
+        attackButtonPanel.add(attackLocation[i][j]);
       }
     }
 
+    JPanel shipButtonPanel = new JPanel(new GridLayout(10, 10));
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        shipButtonPanel.add(shipLocation[i][j]);
+      }
+    }
+
+    JPanel topPanel = new JPanel();
+    topPanel.add(shipButtonPanel);
+
     JPanel bottomPanel = new JPanel();
     bottomPanel.add(exitButton);
-    bottomPanel.add(buttonPanel);
+    bottomPanel.add(attackButtonPanel);
 
+    frame.getContentPane().add(topPanel);
     frame.getContentPane().add(instructions);
     frame.getContentPane().add(bottomPanel);
   }
 
   public static void main(String[] args)
   {
-    SetupGUI setupGUI = new SetupGUI();
-    setupGUI.createComponents();
-    setupGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    GamePlayGUI gamePlayGUI = new GamePlayGUI();
+    gamePlayGUI.createComponents();
+    gamePlayGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 }
