@@ -1,20 +1,54 @@
+import java.util.ArrayList;
+
 public class GameManager {
+  private static Boolean isInSignin;
   private static Boolean isInSetup;
   private static GameBoard board;
   private static Server server;
+  private static ArrayList<User> users;
 
   public static void main(String[] args) {
     // Port defaults to 31415 if a port isn't passed in on the command line
 
    // TODO: main method
+    isInSignin = true;
     isInSetup = true;
     board = new GameBoard();
+    users = new ArrayList<User>();
 		server = new Server(args.length != 0 ? args[0] : "31415");
-
   }
 
   public static String receiveMessage(int playerNumber, String message) {
-    if (isInSetup == true) {
+    if (isInSignin == true) {
+      String[] signinMessage = message.split(",");
+      if (signinMessage[0].equals("N")) {
+        Boolean found = false;
+        for (int i = 0; i < users.size(); i++) {
+          if (users.get(i).getName().equals(signinMessage[1])) {
+            found = true;
+          }
+        }
+        if (found) {
+          return "err,Duplicate User Name";
+        } else {
+          users.add(new User(signinMessage[1]));
+          return "ack";
+        }
+      } else {
+        Boolean found = false;
+        for (int i = 0; i < users.size(); i++) {
+          if (users.get(i).getName().equals(signinMessage[1])) {
+            found = true;
+          }
+        }
+        if (!found) {
+          return "err,Unknown User";
+        } else {
+          return "ack";
+        }
+      }
+    }
+    else if (isInSetup == true) {
       String[] unparsedShips = message.split(",");
 
       boolean success = true;
@@ -55,5 +89,9 @@ public class GameManager {
 
   public static void setIsInSetup(Boolean _isInSetup) {
     isInSetup = _isInSetup;
+  }
+
+  public static void setIsInSignin(Boolean _isInSignin) {
+    isInSignin = _isInSignin;
   }
 }

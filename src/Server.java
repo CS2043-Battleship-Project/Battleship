@@ -62,9 +62,62 @@ public class Server {
 
     System.out.println("Player two connected");
 
+    Boolean doneSignin = false;
     Boolean doneSetup = false;
+    Boolean playerOneSuccessfulSignin = false;
+    Boolean playerTwoSuccessfulSignin = false;
     Boolean playerOneSuccessful = false;
     Boolean playerTwoSuccessful = false;
+
+    while (!playerOneSuccessfulSignin) {
+      try {
+        String playerOneLine = playerOneIn.readLine();
+        System.out.println(playerOneLine);
+        if (playerOneLine == null) {
+          doneSignin = true;
+        } else {
+          String message = GameManager.receiveMessage(1, playerOneLine);
+          String[] response = message.replaceFirst("(1|2):", "").split(",");
+          if (response.length > 1 && (response[1].equals("Unknown User") ||
+              response[1].equals("Duplicate User Name"))) {
+            playerOneOut.println(message);
+            continue;
+          } else {
+            playerOneSuccessfulSignin = true;
+            playerOneOut.println(message);
+          }
+        }
+      } catch (IOException e) {
+        System.err.println("Error reading player input: " + e.getMessage());
+      }
+    }
+
+    while (!playerTwoSuccessfulSignin) {
+      try {
+        String playerTwoLine = playerTwoIn.readLine();
+        System.out.println(playerTwoLine);
+        if (playerTwoLine == null) {
+          doneSignin = true;
+        } else {
+          String message = GameManager.receiveMessage(2, playerTwoLine);
+          String[] response = message.replaceFirst("(1|2):", "").split(",");
+          if (response.length > 1 && (response[1].equals("Unknown User") ||
+              response[1].equals("Duplicate User Name"))) {
+            playerTwoOut.println(message);
+            continue;
+          } else {
+            playerTwoSuccessfulSignin = true;
+            playerTwoOut.println(message);
+          }
+        }
+      } catch (IOException e) {
+        System.err.println("Error reading player input: " + e.getMessage());
+      }
+    }
+
+    GameManager.setIsInSignin(false);
+    doneSignin = true;
+    System.out.println("Hey we're here now");
 
     while (!doneSetup) {
       try {
@@ -75,6 +128,7 @@ public class Server {
             doneSetup = true;
           } else {
             String message = GameManager.receiveMessage(1, playerOneLine);
+            System.out.println(message);
             String response = message.replaceFirst("(1|2):", "");
             if (message.charAt(0) == '1') {
               if (response.startsWith("ack")) {
