@@ -38,7 +38,9 @@ public class SetupGUI extends JFrame
         location[i][j] = new JButton((char)(i + 65) + "" + (j + 1));
         location[i][j].addActionListener(listener);
       }
+	  
     }
+	
   }
 
   public void createComponents()
@@ -63,10 +65,10 @@ public class SetupGUI extends JFrame
     frame.getContentPane().add(bottomPanel);
   }
 
-  public static void main(String[] args)
+ /* public static void main(String[] args)
   {
     SetupGUI setupGUI = new SetupGUI();
     setupGUI.createComponents();
     setupGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  }
+  }*/
 }

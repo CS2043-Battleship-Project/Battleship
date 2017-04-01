@@ -10,13 +10,14 @@ public class Client
   private PrintWriter out;
   private BufferedReader in;
   private BufferedReader stdln;
-
+ // private MainMenu mainMenu;
 
   public Client(String host, int port)
   {
      this.host = host;
      this.port = port;
       s = null;
+      //mainMenu = new MainMenu();
 
     try
     {
@@ -33,8 +34,9 @@ public class Client
                         + host + " on port: " + port);
       System.exit(-1);
     }
-
-
+	openStream();
+	messageToServer();
+	closeStream();
   }
   public void openStream()
   {
@@ -91,12 +93,12 @@ public class Client
   }
 
 
-  public static void main(String[] args)
+ /* public static void main(String[] args)
   {
     Client client =new Client("localhost", 31415);
     client.openStream();
     client.messageToServer();
     client.closeStream();
 
-  }
+  }*/
 }
