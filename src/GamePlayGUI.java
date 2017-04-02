@@ -79,7 +79,7 @@ public class GamePlayGUI extends JFrame
 
   public static void main(String[] args)
   {
-    //GamePlayGUI gamePlayGUI = new GamePlayGUI();
+    GamePlayGUI gamePlayGUI = new GamePlayGUI();
     gamePlayGUI.createComponents();
     gamePlayGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
