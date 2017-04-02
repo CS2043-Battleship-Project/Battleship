@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
+import java.awt.Graphics;
 
 public class MainMenu extends JFrame
 {
@@ -96,14 +97,13 @@ public class MainMenu extends JFrame
 	 if(userString.equals(dummyUser) && portString.equals(dummyPort))
 		{
 			int portNumber = Integer.parseInt(portString);
-			SetupGUI setupGUI = new SetupGUI();
-			setupGUI.createComponents();
-			client = new Client(userString, portNumber);
 			
+			//client = new Client(userString, portNumber);
+			setupGUI =new SetupGUI();
 			frame.setVisible(false);
 		}
   }
-  
+  	
       private class Exit implements ActionListener
       {
         @Override

@@ -10,8 +10,10 @@ public class Server {
   private PrintWriter playerOneOut;
   private PrintWriter playerTwoOut;
 
+  
   public Server(String port) {
     // TODO: server connection stuff
+	
     try {
       socket = new ServerSocket(Integer.parseInt(port));
     } catch (IOException e) {
@@ -61,7 +63,8 @@ public class Server {
 
 
     System.out.println("Player two connected");
-
+	
+	
     Boolean doneSignin = false;
     Boolean doneSetup = false;
     Boolean playerOneSuccessfulSignin = false;
@@ -242,4 +245,5 @@ public class Server {
                               + e.getMessage());
         }
 }
+
 	}

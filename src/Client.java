@@ -10,15 +10,15 @@ public class Client
   private PrintWriter out;
   private BufferedReader in;
   private BufferedReader stdln;
- // private MainMenu mainMenu;
+  private SetupGUI setupGUI;
 
   public Client(String host, int port)
   {
      this.host = host;
      this.port = port;
       s = null;
-      //mainMenu = new MainMenu();
-
+     
+	
     try
     {
         s = new Socket(host, port);
@@ -34,9 +34,12 @@ public class Client
                         + host + " on port: " + port);
       System.exit(-1);
     }
+	
+	setupGUI = new SetupGUI();
+	
 	openStream();
 	messageToServer();
-	closeStream();
+	
   }
   public void openStream()
   {
@@ -61,6 +64,7 @@ public class Client
         if(line == null)
         {
           done = true;
+		  closeStream();
         }
         else
         {
@@ -91,7 +95,12 @@ public class Client
 
 
   }
-
+	public void paintComponent()
+	{
+		SetupGUI setupGUI = new SetupGUI();
+		setupGUI.createComponents();
+	}
+  
 
  /* public static void main(String[] args)
   {

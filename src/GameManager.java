@@ -6,7 +6,8 @@ public class GameManager {
   private static GameBoard board;
   private static Server server;
   private static ArrayList<User> users;
-  
+  private static Client client;
+  private static MainMenu mainMenu;
 
 
   public static void main(String[] args) {
@@ -18,8 +19,7 @@ public class GameManager {
     board = new GameBoard();
     users = new ArrayList<User>();
 		server = new Server(args.length != 0 ? args[0] : "31415");
-	
-
+		
   }
 
   public static String receiveMessage(int playerNumber, String message) {

@@ -5,13 +5,13 @@ import java.awt.Toolkit;
 
 public class GamePlayGUI extends JFrame
 {
-  private JFrame frame;
-  private Toolkit toolkit;
-  private JButton[][] attackLocation;
-  private JButton[][] shipLocation;
-  private JButton exitButton;
-  private JLabel instructions;
-  private ActionListener listener;
+  private static JFrame frame;
+  private static Toolkit toolkit;
+  private static JButton[][] attackLocation;
+  private static JButton[][] shipLocation;
+  private static JButton exitButton;
+  private static JLabel instructions;
+  private static ActionListener listener;
 
   public GamePlayGUI()
   {
@@ -44,7 +44,7 @@ public class GamePlayGUI extends JFrame
     }
   }
 
-  public void createComponents()
+  public static void createComponents()
   {
     instructions = new JLabel("Please place your Aircraft Carrier", SwingConstants.CENTER);
     instructions.setPreferredSize(new Dimension(120, 20));
@@ -79,7 +79,7 @@ public class GamePlayGUI extends JFrame
 
   public static void main(String[] args)
   {
-    GamePlayGUI gamePlayGUI = new GamePlayGUI();
+    //GamePlayGUI gamePlayGUI = new GamePlayGUI();
     gamePlayGUI.createComponents();
     gamePlayGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
